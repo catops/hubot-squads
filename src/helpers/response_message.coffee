@@ -1,10 +1,10 @@
 class ResponseMessage
 
   teamCreated: (team)->
-    "#{team.label()} created, add some people to it"
+    "I created team #{team.label()}, add some people to it with `add [username] to [team]`."
 
   teamAlreadyExists: (team)->
-    "#{team.label()} already exists"
+    "Team #{team.label()} already exists."
 
   teamBlacklisted: (team)->
     "Sorry, you can't create a team called 'team' or 'teams'."
@@ -13,7 +13,7 @@ class ResponseMessage
     "#{team.label()} removed"
 
   listTeams: (teams)->
-    return 'No team was created so far' if teams.length is 0
+    return 'No teams have been created so far.' if teams.length is 0
     message = "Teams:"
 
     for team in teams
@@ -26,7 +26,7 @@ class ResponseMessage
         message += "\n`#{team.name}` (empty)"
     message
 
-  adminRequired: -> "Sorry, only admins can perform this operation"
+  adminRequired: -> "Sorry, only admins can perform this operation."
 
   memberAddedToTeam: (member, team)->
     count = team.membersCount() - 1
@@ -39,19 +39,16 @@ class ResponseMessage
     "#{member} is not a valid user. Are you sure they have a chat account?"
 
   memberAlreadyAddedToTeam: (member, team)->
-    "#{member} already in the #{team.label()}"
+    "#{member} is already in #{team.label()}"
 
   memberRemovedFromTeam: (member, team)->
     count = team.membersCount()
-    message = "#{member} removed from the #{team.label()}"
+    message = "I removed #{member} from #{team.label()}"
     return message if count is 0
     "#{message}, #{count} remaining"
 
   memberAlreadyOutOfTeam: (member, team)->
-    "#{member} already out of the #{team.label()}"
-
-  teamCount: (team)->
-    "#{team.membersCount()} people are currently in the team"
+    "#{member} is not in #{team.label()}"
 
   teamNotFound: (teamName)->
     "`#{teamName}` team does not exist"
@@ -59,7 +56,7 @@ class ResponseMessage
   listTeam: (team)->
     count = team.membersCount()
     if count is 0
-      response = "There is no one in the #{team.label()} currently"
+      response = "There is no one in #{team.label()}."
     else
       position = 0
       response = "#{team.label()} (#{count} total):\n"

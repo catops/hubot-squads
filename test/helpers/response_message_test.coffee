@@ -9,12 +9,12 @@ describe 'ResponseMessage', ->
   describe '#teamCreated', ->
     it 'returns the message', ->
       team = new Team('team1')
-      expect(responseMessage.teamCreated(team)).to.eql('`team1` team created, add some people to it')
+      expect(responseMessage.teamCreated(team)).to.eql('I created team `team1` team, add some people to it with `add [username] to [team]`.')
 
   describe '#teamAlreadyExists', ->
     it 'returns the message', ->
       team = Team.create('team1')
-      expect(responseMessage.teamAlreadyExists(team)).to.eql('`team1` team already exists')
+      expect(responseMessage.teamAlreadyExists(team)).to.eql('Team `team1` team already exists.')
 
   describe '#teamDeleted', ->
     it 'returns the message', ->
@@ -39,7 +39,7 @@ describe 'ResponseMessage', ->
 
   describe '#adminRequired', ->
     it 'returns the message', ->
-      expect(responseMessage.adminRequired()).to.eql('Sorry, only admins can perform this operation')
+      expect(responseMessage.adminRequired()).to.eql('Sorry, only admins can perform this operation.')
 
   describe '#memberAddedToTeam', ->
     describe 'there is no members in the team', ->
@@ -60,28 +60,23 @@ describe 'ResponseMessage', ->
   describe '#memberAlreadyAddedToTeam', ->
     it 'returns the message', ->
       team = new Team('team1')
-      expect(responseMessage.memberAlreadyAddedToTeam('member1', team)).to.eql('member1 already in the `team1` team')
+      expect(responseMessage.memberAlreadyAddedToTeam('member1', team)).to.eql('member1 is already in `team1` team')
 
   describe '#memberRemovedFromTeam', ->
     describe 'there is one member', ->
       it 'returns the message', ->
         team = new Team('team1', [])
-        expect(responseMessage.memberRemovedFromTeam('member1', team)).to.eql('member1 removed from the `team1` team')
+        expect(responseMessage.memberRemovedFromTeam('member1', team)).to.eql('I removed member1 from `team1` team')
 
     describe 'there are some members', ->
       it 'returns the message', ->
         team = new Team('team1', ['member1'])
-        expect(responseMessage.memberRemovedFromTeam('member2', team)).to.eql('member2 removed from the `team1` team, 1 remaining')
+        expect(responseMessage.memberRemovedFromTeam('member2', team)).to.eql('I removed member2 from `team1` team, 1 remaining')
 
   describe '#memberAlreadyOutOfTeam', ->
     it 'returns the message', ->
       team = new Team('team1')
-      expect(responseMessage.memberAlreadyOutOfTeam('member1', team)).to.eql('member1 already out of the `team1` team')
-
-  describe '#teamCount', ->
-    it 'returns the message', ->
-      team = new Team('soccer', ['@mocha', '@peter'])
-      expect(responseMessage.teamCount(team)).to.eql('2 people are currently in the team')
+      expect(responseMessage.memberAlreadyOutOfTeam('member1', team)).to.eql('member1 is not in `team1` team')
 
   describe '#teamNotFound', ->
     it 'returns the message', ->
@@ -97,7 +92,7 @@ describe 'ResponseMessage', ->
     describe 'without members', ->
       it 'returns the message', ->
         team = Team.create('team1')
-        expected = 'There is no one in the `team1` team currently'
+        expected = 'There is no one in `team1` team.'
         expect(responseMessage.listTeam(team)).to.eql(expected)
 
   describe '#teamCleared', ->
