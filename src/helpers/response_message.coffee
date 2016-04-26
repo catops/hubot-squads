@@ -6,6 +6,9 @@ class ResponseMessage
   teamAlreadyExists: (team)->
     "#{team.label()} already exists"
 
+  teamBlacklisted: (team)->
+    "Sorry, you can't create a team called 'team' or 'teams'."
+
   teamDeleted: (team)->
     "#{team.label()} removed"
 

@@ -34,8 +34,10 @@ module.exports = (robot) ->
   ##
   ## hubot teams create <team_name> - create team called <team_name>
   ##
-  robot.respond /teams? create (\S*)/i, (msg) ->
-    teamName = msg.match[1]
+  robot.respond /teams? create( new team)? (\S*)/i, (msg) ->
+    teamName = msg.match[2]
+    if /^teams?$/.test(teamName)
+      return msg.send ResponseMessage.teamBlacklisted teamName
     if team = Team.get teamName
       message = ResponseMessage.teamAlreadyExists team
     else
@@ -46,8 +48,8 @@ module.exports = (robot) ->
   ##
   ## hubot teams remove <team_name> - delete team called <team_name>
   ##
-  robot.respond /teams? (delete|remove) (\S*)/i, (msg) ->
-    teamName = msg.match[2]
+  robot.respond /teams? (delete|remove)( team)? (\S*)( team)?$/i, (msg) ->
+    teamName = msg.match[3]
     if Config.isAdmin(msg.message.user.name)
       if team = Team.get teamName
         team.destroy()
@@ -58,19 +60,11 @@ module.exports = (robot) ->
     else
       msg.reply ResponseMessage.adminRequired()
 
-
-  ##
-  ## hubot teams list - list all existing teams
-  ##
-  robot.respond /teams? (list|show|all)( all)?( teams)?/i, (msg) ->
-    teams = Team.all()
-    msg.send ResponseMessage.listTeams(teams)
-
   ##
   ## hubot teams add (me|<user>) to <team_name> - add me or <user> to team
   ##
-  robot.respond /teams add (\S*) to (\S*)/i, (msg) ->
-    teamName = msg.match[2]
+  robot.respond /teams add (\S*) to( team)? (\S*)( team)?/i, (msg) ->
+    teamName = msg.match[3]
     team = Team.getOrDefault(teamName)
     return msg.send ResponseMessage.teamNotFound(teamName) unless team
     user = UserNormalizer.normalize(msg.message.user.name, msg.match[1])
@@ -85,8 +79,8 @@ module.exports = (robot) ->
   ##
   ## hubot teams remove (me|<user>) from <team_name> - remove me or <user> from team
   ##
-  robot.respond /teams remove (\S*) (from|to) (\S*)/i, (msg) ->
-    teamName = msg.match[3]
+  robot.respond /teams remove (\S*) (from|to)( team)? (\S*)/i, (msg) ->
+    teamName = msg.match[4]
     team = Team.getOrDefault(teamName)
     return msg.send ResponseMessage.teamNotFound(teamName) unless team
     user = UserNormalizer.normalize(msg.message.user.name, msg.match[1])
@@ -98,10 +92,17 @@ module.exports = (robot) ->
     msg.send message
 
   ##
+  ## hubot teams list - list all existing teams
+  ##
+  robot.respond /teams? (list|show)( all)? teams$/i, (msg) ->
+    teams = Team.all()
+    msg.send ResponseMessage.listTeams(teams)
+
+  ##
   ## hubot teams (list|show) <team_name> - list the people in the team
   ##
-  robot.respond /teams (list|show) (\S*)/i, (msg) ->
-    teamName = msg.match[2]
+  robot.respond /teams (list|show)( team)? (\S*)$/i, (msg) ->
+    teamName = msg.match[3]
     team = Team.getOrDefault(teamName)
     message = if team then ResponseMessage.listTeam(team) else ResponseMessage.teamNotFound(teamName)
     msg.send message
@@ -109,9 +110,9 @@ module.exports = (robot) ->
   ##
   ## hubot teams (empty|clear) <team_name> - clear team list
   ##
-  robot.respond /teams (empty|clear) (\S*)/i, (msg) ->
+  robot.respond /teams (empty|clear)( team)? (\S*)/i, (msg) ->
     if Config.isAdmin(msg.message.user.name)
-      teamName = msg.match[2]
+      teamName = msg.match[3]
       if team = Team.getOrDefault(teamName)
         team.clear()
         message = ResponseMessage.teamCleared(team)
@@ -120,17 +121,3 @@ module.exports = (robot) ->
       msg.send message
     else
       msg.reply ResponseMessage.adminRequired()
-
-  ##
-  ## hubot upgrade teams - upgrade team for the new structure
-  ##
-  robot.respond /upgrade teams$/i, (msg) ->
-    teams = {}
-    for index, team of robot.brain.data.teams
-      if team instanceof Array
-        teams[index] = new Team(index, team)
-      else
-        teams[index] = team
-
-    robot.brain.data.teams = teams
-    msg.send ResponseMessage.listTeams(Team.all())

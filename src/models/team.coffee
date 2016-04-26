@@ -40,6 +40,7 @@ class Team
 
   @create: (name, members = [])->
     return false if @exists name
+    return false if /^teams?$/.test(name)
     @store()[name] =
       name: name
       members: members
