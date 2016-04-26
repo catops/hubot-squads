@@ -1,7 +1,7 @@
 {
   "name": "catops-teams",
   "description": "Create and manage team members using Hubot.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Chris Contolini <christopher.contolini@cfpb.gov>",
   "license": "MIT",
   "keywords": [
