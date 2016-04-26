@@ -34,7 +34,7 @@ describe 'ResponseMessage', ->
         Team.create('team1')
         Team.create('team2')
         teams = Team.all()
-        expected = 'Teams:\n`team1` (empty)\n`team2` (empty)\n'
+        expected = 'Teams:\n`team1` (empty)\n`team2` (empty)'
         expect(responseMessage.listTeams(teams)).to.eql(expected)
 
   describe '#adminRequired', ->

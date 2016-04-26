@@ -14,16 +14,16 @@ class ResponseMessage
 
   listTeams: (teams)->
     return 'No team was created so far' if teams.length is 0
-    message = "Teams:\n"
+    message = "Teams:"
 
     for team in teams
       if team.membersCount() > 0
-        message += "`#{team.name}` (#{team.membersCount()} total)"
+        message += "\n`#{team.name}` (#{team.membersCount()} total)"
 
         for user in team.members
           message += "\n- #{user}"
       else
-        message += "`#{team.name}` (empty)\n"
+        message += "\n`#{team.name}` (empty)"
     message
 
   adminRequired: -> "Sorry, only admins can perform this operation"

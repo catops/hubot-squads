@@ -82,7 +82,7 @@ describe 'hubot-team', ->
     it 'shows the teams without members', (done)->
       Team.create('soccer')
       messageHelper.sendMessage(done, 'hubot list all teams', (result)->
-        expect(result[0]).to.equal('Teams:\n`soccer` (empty)\n'))
+        expect(result[0]).to.equal('Teams:\n`soccer` (empty)'))
 
     it 'shows the teams with members', (done)->
       Team.create('soccer', ['peter'])
