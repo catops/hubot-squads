@@ -42,6 +42,8 @@ describe 'hubot-team', ->
       {robot, user, adapter} = ret
       messageHelper = new Helper(robot, adapter, user)
       process.env.HUBOT_TEAM_ADMIN = user['name']
+      messageHelper.robot.auth = hasRole: ->
+        true
       do done
 
   afterEach ->
@@ -75,6 +77,8 @@ describe 'hubot-team', ->
 
     it 'shows a message if an admin is required', (done) ->
       Team.create('soccer')
+      messageHelper.robot.auth = hasRole: ->
+        false
       messageHelper.replyMessageWithNoAdmin(done, 'hubot delete team soccer', (result)->
         expect(result[0]).to.equal('Sorry, only admins can perform this operation'))
 

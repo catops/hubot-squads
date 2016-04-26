@@ -19,7 +19,6 @@
 # Author:
 #   mihai
 
-Config          = require './models/config'
 Team            = require './models/team'
 ResponseMessage = require './helpers/response_message'
 UserNormalizer  = require './helpers/user_normalizer'
@@ -27,9 +26,6 @@ UserNormalizer  = require './helpers/user_normalizer'
 module.exports = (robot) ->
   robot.brain.data.teams or= {}
   Team.robot = robot
-
-  unless Config.adminList()
-    robot.logger.warning 'HUBOT_TEAM_ADMIN environment variable not set'
 
   ##
   ## hubot teams create <team_name> - create team called <team_name>
@@ -50,7 +46,7 @@ module.exports = (robot) ->
   ##
   robot.respond /(delete|remove) team (\S*)$/i, (msg) ->
     teamName = msg.match[2]
-    if Config.isAdmin(msg.message.user.name)
+    if robot.auth.hasRole msg.envelope.user, 'admin'
       if team = Team.get teamName
         team.destroy()
         message = ResponseMessage.teamDeleted(team)
@@ -111,7 +107,7 @@ module.exports = (robot) ->
   ## hubot teams (empty|clear) <team_name> - clear team list
   ##
   robot.respond /(empty|clear) team (\S*)/i, (msg) ->
-    if Config.isAdmin(msg.message.user.name)
+    if robot.auth.hasRole msg.envelope.user, 'admin'
       teamName = msg.match[2]
       if team = Team.getOrDefault(teamName)
         team.clear()
