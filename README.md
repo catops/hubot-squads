@@ -32,13 +32,13 @@ as a comma separated list of usernames.
 ## Commands
 
 ```
-hubot teams create <team_name> - create team called <team_name>
-hubot teams (delete|remove) <team_name> - delete team called <team_name>
-hubot teams (list|show) teams - list all existing teams
-hubot teams add (me|<user>) to <team_name> - add me or <user> to team
-hubot teams remove (me|<user>) from <team_name> - remove me or <user> from team
-hubot teams (list|show) <team_name> - list the people in the team
-hubot teams (empty|clear) <team_name> - clear everyone from team
+hubot create team <team_name> - create team called <team_name>
+hubot (delete|remove) team <team_name> - delete team called <team_name>
+hubot (list|show) teams - list all existing teams
+hubot add (me|<user>) to team <team_name> - add me or <user> to team
+hubot remove (me|<user>) from team <team_name> - remove me or <user> from team
+hubot (list|show) team <team_name> - list the people in the team
+hubot (empty|clear) team <team_name> - clear everyone from team
 ```
 
 ----

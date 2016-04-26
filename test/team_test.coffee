@@ -52,90 +52,90 @@ describe 'hubot-team', ->
 
   describe 'create a team', ->
     it 'shows a message when team is created successfully', (done)->
-      messageHelper.sendMessage(done, 'hubot teams create soccer', (result)->
+      messageHelper.sendMessage(done, 'hubot create team soccer', (result)->
         expect(result[0]).to.equal('`soccer` team created, add some people to it')
       )
 
     describe 'failure', ->
       it 'shows a message when team is already been created', (done)->
         Team.create('soccer')
-        messageHelper.sendMessage(done, 'hubot teams create soccer', (result)->
+        messageHelper.sendMessage(done, 'hubot create team soccer', (result)->
           expect(result[0]).to.equal('`soccer` team already exists')
         )
 
   describe '(delete|remove) a team', ->
     it 'shows a message when team does not exist', (done) ->
-      messageHelper.sendMessage(done, 'hubot teams delete soccer team', (result)->
+      messageHelper.sendMessage(done, 'hubot delete team soccer', (result)->
         expect(result[0]).to.equal('`soccer` team does not exist'))
 
     it 'shows a message when team is removed successfully', (done) ->
       Team.create('soccer')
-      messageHelper.sendMessage(done, 'hubot teams delete soccer team', (result)->
+      messageHelper.sendMessage(done, 'hubot delete team soccer', (result)->
         expect(result[0]).to.equal('`soccer` team removed'))
 
     it 'shows a message if an admin is required', (done) ->
       Team.create('soccer')
-      messageHelper.replyMessageWithNoAdmin(done, 'hubot teams delete soccer team', (result)->
+      messageHelper.replyMessageWithNoAdmin(done, 'hubot delete team soccer', (result)->
         expect(result[0]).to.equal('Sorry, only admins can perform this operation'))
 
   describe 'list all teams', ->
     it 'shows the teams without members', (done)->
       Team.create('soccer')
-      messageHelper.sendMessage(done, 'hubot teams list all teams', (result)->
+      messageHelper.sendMessage(done, 'hubot list all teams', (result)->
         expect(result[0]).to.equal('Teams:\n`soccer` (empty)\n'))
 
     it 'shows the teams with members', (done)->
       Team.create('soccer', ['peter'])
-      messageHelper.sendMessage(done, 'hubot teams list all teams', (result)->
+      messageHelper.sendMessage(done, 'hubot list all teams', (result)->
         expect(result[0]).to.equal('Teams:\n`soccer` (1 total)\n- peter'))
 
     it 'shows no team created message', (done)->
-      messageHelper.sendMessage(done, 'hubot teams list all teams', (result)->
+      messageHelper.sendMessage(done, 'hubot list all teams', (result)->
         expect(result[0]).to.equal('No team was created so far'))
 
   describe 'teamName? team add (me|user)', ->
 
     it 'shows a message when team does not exist', (done)->
-      messageHelper.sendMessage(done, 'hubot teams add peter to soccer', (result)->
+      messageHelper.sendMessage(done, 'hubot add peter to team soccer', (result)->
         expect(result[0]).to.equal('`soccer` team does not exist'))
 
     it 'shows a message when member is already in the team', (done)->
       robot.brain.data.users = [{ id: '1234', name: 'peter' }]
       Team.create('soccer', ['peter'])
-      messageHelper.sendMessage(done, 'hubot teams add peter to soccer', (result)->
+      messageHelper.sendMessage(done, 'hubot add peter to team soccer', (result)->
         expect(result[0]).to.equal('peter already in the `soccer` team'))
 
     it 'shows a message when user is new in team', (done)->
       robot.brain.data.users = [{ id: '1234', name: 'peter' }]
       Team.create('soccer')
-      messageHelper.sendMessage(done, 'hubot teams add peter to soccer', (result)->
+      messageHelper.sendMessage(done, 'hubot add peter to team soccer', (result)->
         expect(result[0]).to.equal('peter added to the `soccer` team'))
 
     it 'shows a message when user does not exist', (done)->
       Team.create('soccer')
-      messageHelper.sendMessage(done, 'hubot teams add peter to soccer', (result)->
+      messageHelper.sendMessage(done, 'hubot add peter to team soccer', (result)->
         expect(result[0]).to.equal('peter is not a valid user. Are you sure they have a chat account?'))
 
   describe 'teamName? team remove member', ->
     it 'shows a message when user does not exist in team', (done)->
       Team.create('soccer')
-      messageHelper.sendMessage(done, 'hubot teams remove peter from soccer', (result)->
+      messageHelper.sendMessage(done, 'hubot remove peter from team soccer', (result)->
         expect(result[0]).to.equal('peter already out of the `soccer` team'))
 
     it 'shows a message when user exists in team', (done)->
       Team.create('soccer', ['peter', '@james'])
-      messageHelper.sendMessage(done, 'hubot teams remove peter from soccer', (result)->
+      messageHelper.sendMessage(done, 'hubot remove peter from team soccer', (result)->
         expect(result[0]).to.equal('peter removed from the `soccer` team, 1 remaining'))
 
   describe 'teamName? team list|show', ->
     it 'shows a message listing the members in a team', (done)->
       Team.create('soccer', ['mocha', 'peter'])
-      messageHelper.sendMessage(done, 'hubot teams list soccer', (result)->
+      messageHelper.sendMessage(done, 'hubot list team soccer', (result)->
         expect(result[0]).to.equal('`soccer` team (2 total):\n1. mocha\n2. peter\n'))
 
   describe 'teamName? team clear|empty', ->
     it 'shows a message when members have been removed', (done)->
       Team.create('soccer', ['mocha', 'peter'])
 
-      messageHelper.sendMessage(done, 'hubot teams empty soccer', (result)->
+      messageHelper.sendMessage(done, 'hubot empty team soccer', (result)->
         expect(result[0]).to.equal('`soccer` team list cleared'))
