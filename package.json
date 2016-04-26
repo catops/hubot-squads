@@ -1,23 +1,26 @@
 {
-  "name": "hubot-team",
-  "description": "Create and manage the members of a team using hubot",
-  "version": "2.0.0",
-  "author": "Mihai Cîrlănaru <mihai@cirlanaru.com>",
+  "name": "catops-teams",
+  "description": "Create and manage team members using Hubot.",
+  "version": "1.0.0",
+  "author": "Chris Contolini <christopher.contolini@cfpb.gov>",
   "license": "MIT",
   "keywords": [
     "hubot",
     "hubot-scripts",
+    "chatops",
+    "catops",
+    "teams",
     "team"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/hubot-scripts/hubot-team.git"
+    "url": "git://github.com/catops/catops-teams.git"
   },
   "bugs": {
-    "url": "https://github.com/hubot-scripts/hubot-team/issues"
+    "url": "https://github.com/catops/catops-teams/issues"
   },
   "dependencies": {
-    "coffee-script": "~1.6"
+    "coffee-script": "1.6"
   },
   "main": "index.coffee",
   "scripts": {
