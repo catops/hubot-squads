@@ -2,6 +2,10 @@ class Team
 
   @robot = null
 
+  @brain: ->
+    throw new Error('robot is not set up') unless @robot
+    @robot.brain
+
   @store: ->
     throw new Error('robot is not set up') unless @robot
     @robot.brain.data.teams or= {}
@@ -67,6 +71,9 @@ class Team
 
   isDefault: ->
     @name is Team.defaultName()
+
+  isValidUser: (user) ->
+    return !!Team.brain().userForName(user)
 
   label: ->
     if @isDefault()

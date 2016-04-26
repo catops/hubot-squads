@@ -32,6 +32,9 @@ class ResponseMessage
     singular_or_plural = if count is 1 then "other is" else "others are"
     "#{message}, #{count} #{singular_or_plural} in"
 
+  memberDoesntExist: (member)->
+    "#{member} is not a valid user. Are you sure they have a chat account?"
+
   memberAlreadyAddedToTeam: (member, team)->
     "#{member} already in the #{team.label()}"
 

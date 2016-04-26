@@ -110,14 +110,21 @@ describe 'hubot-team', ->
         expect(result[0]).to.equal('`soccer` team does not exist'))
 
     it 'shows a message when member is already in the team', (done)->
+      robot.brain.data.users = [{ id: '1234', name: 'peter' }]
       Team.create('soccer', ['peter'])
       messageHelper.sendMessage(done, 'hubot soccer team add peter', (result)->
         expect(result[0]).to.equal('peter already in the `soccer` team'))
 
     it 'shows a message when user is new in team', (done)->
+      robot.brain.data.users = [{ id: '1234', name: 'peter' }]
       Team.create('soccer')
       messageHelper.sendMessage(done, 'hubot soccer team add peter', (result)->
         expect(result[0]).to.equal('peter added to the `soccer` team'))
+
+    it 'shows a message when user does not exist', (done)->
+      Team.create('soccer')
+      messageHelper.sendMessage(done, 'hubot soccer team add peter', (result)->
+        expect(result[0]).to.equal('peter is not a valid user. Are you sure they have a chat account?'))
 
   describe 'teamName? team +1', ->
     describe 'team name given', ->
