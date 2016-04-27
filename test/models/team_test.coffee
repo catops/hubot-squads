@@ -211,16 +211,6 @@ describe 'Team', ->
         team.destroy()
         expect(Team.store()).to.not.include.keys('team1')
 
-    describe '#label', ->
-      it 'returns the team label', ->
-        team = new Team('team1')
-        expect(team.label()).to.eql('`team1` team')
-
-      describe 'if default team', ->
-        it 'returns the default label', ->
-          team = new Team()
-          expect(team.label()).to.eql('team')
-
     describe '#isDefault', ->
       describe 'name is the default team label', ->
         it 'returns true', ->

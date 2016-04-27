@@ -77,9 +77,6 @@ class Team
     return !!Team.brain().userForName(user)
 
   label: ->
-    if @isDefault()
-      'team'
-    else
-      "`#{@name}` team"
+    "`#{@name}`"
 
 module.exports = Team
