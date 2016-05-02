@@ -41,9 +41,9 @@ describe 'hubot-team', ->
       process.setMaxListeners(0)
       {robot, user, adapter} = ret
       messageHelper = new Helper(robot, adapter, user)
-      process.env.HUBOT_TEAM_ADMIN = user['name']
-      messageHelper.robot.auth = hasRole: ->
-        true
+      process.env.HUBOT_AUTH_ADMIN = user['id']
+      messageHelper.robot.auth = isAdmin: ->
+        return process.env.HUBOT_AUTH_ADMIN.split(',').indexOf(user['id']) > -1
       do done
 
   afterEach ->
@@ -76,9 +76,8 @@ describe 'hubot-team', ->
         expect(result[0]).to.equal('Team `soccer` removed.'))
 
     it 'shows a message if an admin is required', (done) ->
+      process.env.HUBOT_AUTH_ADMIN = []
       Team.create('soccer')
-      messageHelper.robot.auth = hasRole: ->
-        false
       messageHelper.replyMessageWithNoAdmin(done, 'hubot delete team soccer', (result)->
         expect(result[0]).to.equal('Sorry, only admins can perform this operation.'))
 

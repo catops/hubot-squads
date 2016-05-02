@@ -46,7 +46,7 @@ module.exports = (robot) ->
   ##
   robot.respond /(delete|remove) team (\S*)$/i, (msg) ->
     teamName = msg.match[2]
-    if robot.auth.hasRole msg.envelope.user, 'admin'
+    if robot.auth.isAdmin msg.envelope.user
       if team = Team.get teamName
         team.destroy()
         message = ResponseMessage.teamDeleted(team)
@@ -107,7 +107,7 @@ module.exports = (robot) ->
   ## hubot teams (empty|clear) <team_name> - clear team list
   ##
   robot.respond /(empty|clear) team (\S*)/i, (msg) ->
-    if robot.auth.hasRole msg.envelope.user, 'admin'
+    if robot.auth.isAdmin msg.envelope.user
       teamName = msg.match[2]
       if team = Team.getOrDefault(teamName)
         team.clear()
