@@ -20,7 +20,7 @@
     "url": "https://github.com/catops/hubot-squads/issues"
   },
   "dependencies": {
-    "coffee-script": "1.6"
+    "coffee-script": "1.10.0"
   },
   "main": "index.coffee",
   "scripts": {
@@ -33,6 +33,6 @@
     "sinon": "*",
     "hubot-mock-adapter": "^1.0.0",
     "hubot-mock-adapter-helper": "0.0.1",
-    "hubot": "~2.10.0"
+    "hubot": "~2.19.0"
   }
 }
