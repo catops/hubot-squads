@@ -1,37 +1,37 @@
 class ResponseMessage
 
-  teamCreated: (team)->
-    "I created team #{team.label()}, add some people to it with `add [username] to team [team]`."
+  squadCreated: (squad)->
+    "I created squad #{squad.label()}, add some people to it with `add [username] to squad [squad]`."
 
-  teamAlreadyExists: (team)->
-    "Team #{team.label()} already exists."
+  squadAlreadyExists: (squad)->
+    "Squad #{squad.label()} already exists."
 
-  teamBlacklisted: (team)->
-    "Sorry, you can't create a team called 'team' or 'teams'."
+  squadBlacklisted: (squad)->
+    "Sorry, you can't create a squad called 'squad' or 'squads'."
 
-  teamDeleted: (team)->
-    "Team #{team.label()} removed."
+  squadDeleted: (squad)->
+    "Squad #{squad.label()} removed."
 
-  listTeams: (teams)->
-    return 'No teams have been created. Create one with `create team [team]`.' if teams.length is 0
-    message = "Teams:"
+  listSquads: (squads)->
+    return 'No squads have been created. Create one with `create squad [squad]`.' if squads.length is 0
+    message = "Squads:"
 
-    for team in teams
-      if team.membersCount() > 0
-        message += "\n`#{team.name}` (#{team.membersCount()} total)"
+    for squad in squads
+      if squad.membersCount() > 0
+        message += "\n`#{squad.name}` (#{squad.membersCount()} total)"
 
-        for user in team.members
+        for user in squad.members
           message += "\n- #{user}"
         message += "\n"
       else
-        message += "\n`#{team.name}` (empty)"
+        message += "\n`#{squad.name}` (empty)"
     message
 
   adminRequired: -> "Sorry, only admins can perform this operation."
 
-  memberAddedToTeam: (member, team)->
-    count = team.membersCount() - 1
-    message = "I added #{member} to team #{team.label()}."
+  memberAddedToSquad: (member, squad)->
+    count = squad.membersCount() - 1
+    message = "I added #{member} to squad #{squad.label()}."
     return message if count is 0
     singular_or_plural = if count is 1 then "other member is" else "others are"
     "#{message} #{count} #{singular_or_plural} in it."
@@ -39,35 +39,35 @@ class ResponseMessage
   memberDoesntExist: (member)->
     "#{member} is not a valid user. Are you sure they have a chat account?"
 
-  memberAlreadyAddedToTeam: (member, team)->
-    "#{member} is already in team #{team.label()}."
+  memberAlreadyAddedToSquad: (member, squad)->
+    "#{member} is already in squad #{squad.label()}."
 
-  memberRemovedFromTeam: (member, team)->
-    count = team.membersCount()
-    message = "I removed #{member} from #{team.label()}."
+  memberRemovedFromSquad: (member, squad)->
+    count = squad.membersCount()
+    message = "I removed #{member} from #{squad.label()}."
     return message if count is 0
     "#{message} #{count} member remains."
 
-  memberAlreadyOutOfTeam: (member, team)->
-    "#{member} is not in team #{team.label()}."
+  memberAlreadyOutOfSquad: (member, squad)->
+    "#{member} is not in squad #{squad.label()}."
 
-  teamNotFound: (teamName)->
-    "Team `#{teamName}` does not exist."
+  squadNotFound: (squadName)->
+    "Squad `#{squadName}` does not exist."
 
-  listTeam: (team)->
-    count = team.membersCount()
+  listSquad: (squad)->
+    count = squad.membersCount()
     if count is 0
-      response = "There is no one in #{team.label()}."
+      response = "There is no one in #{squad.label()}."
     else
       position = 0
-      response = "#{team.label()} (#{count} total):\n"
-      for member in team.members
+      response = "#{squad.label()} (#{count} total):\n"
+      for member in squad.members
         position += 1
         response += "#{position}. #{member}\n"
 
     response
 
-  teamCleared: (team)->
-    "Team #{team.label()} has been emptied."
+  squadCleared: (squad)->
+    "Squad #{squad.label()} has been emptied."
 
 module.exports = new ResponseMessage

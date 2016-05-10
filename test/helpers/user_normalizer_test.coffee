@@ -4,17 +4,17 @@ UserNormalizer = require '../../src/helpers/user_normalizer'
 describe 'UserNormalizer', ->
 
   describe '.normalizationEnabled', ->
-    describe 'HUBOT_TEAM_NORMALIZE_USERNAMES env var is set', ->
+    describe 'HUBOT_SQUAD_NORMALIZE_USERNAMES env var is set', ->
       before ->
-        process.env.HUBOT_TEAM_NORMALIZE_USERNAMES = true
+        process.env.HUBOT_SQUAD_NORMALIZE_USERNAMES = true
 
       after ->
-        delete process.env.HUBOT_TEAM_NORMALIZE_USERNAMES
+        delete process.env.HUBOT_SQUAD_NORMALIZE_USERNAMES
 
        it 'is enabled', ->
         expect(UserNormalizer.normalizationEnabled()).to.be.true
 
-    describe 'HUBOT_TEAM_NORMALIZE_USERNAMES env var is not set', ->
+    describe 'HUBOT_SQUAD_NORMALIZE_USERNAMES env var is not set', ->
        it 'is not enabled', ->
         expect(UserNormalizer.normalizationEnabled()).to.be.false
 
@@ -23,10 +23,10 @@ describe 'UserNormalizer', ->
 
     describe 'normalization is enabled', ->
       before ->
-        process.env.HUBOT_TEAM_NORMALIZE_USERNAMES = true
+        process.env.HUBOT_SQUAD_NORMALIZE_USERNAMES = true
 
       after ->
-        delete process.env.HUBOT_TEAM_NORMALIZE_USERNAMES
+        delete process.env.HUBOT_SQUAD_NORMALIZE_USERNAMES
 
       describe 'userInput is given', ->
 

@@ -1,4 +1,4 @@
-class Team
+class Squad
 
   @robot = null
 
@@ -8,17 +8,17 @@ class Team
 
   @store: ->
     throw new Error('robot is not set up') unless @robot
-    @robot.brain.data.teams or= {}
+    @robot.brain.data.squads or= {}
 
   @defaultName: ->
     '__default__'
 
   @all: ->
-    teams = []
-    for key, teamData of @store()
+    squads = []
+    for key, squadData of @store()
       continue if key is @defaultName()
-      teams.push new Team(teamData.name, teamData.members)
-    teams
+      squads.push new Squad(squadData.name, squadData.members)
+    squads
 
   @getDefault: (members = [])->
     @create(@defaultName(), members) unless @exists @defaultName()
@@ -29,25 +29,25 @@ class Team
 
   @get: (name)->
     return null unless @exists name
-    teamData = @store()[name]
-    new Team(teamData.name, teamData.members)
+    squadData = @store()[name]
+    new Squad(squadData.name, squadData.members)
 
-  @getOrDefault: (teamName)->
-    if teamName then @get(teamName) else @getDefault()
+  @getOrDefault: (squadName)->
+    if squadName then @get(squadName) else @getDefault()
 
   @exists: (name)->
     name of @store()
 
   @create: (name, members = [])->
     return false if @exists name
-    return false if /^teams?$/.test(name)
+    return false if /^squads?$/.test(name)
     @store()[name] =
       name: name
       members: members
-    new Team(name, members)
+    new Squad(name, members)
 
   constructor: (name, @members = [])->
-    @name = name or Team.defaultName()
+    @name = name or Squad.defaultName()
 
   addMember: (member)->
     return false if member in @members
@@ -64,19 +64,19 @@ class Team
     @members.length
 
   clear: ->
-    Team.store()[@name].members = []
+    Squad.store()[@name].members = []
     @members = []
 
   destroy: ->
-    delete Team.store()[@name]
+    delete Squad.store()[@name]
 
   isDefault: ->
-    @name is Team.defaultName()
+    @name is Squad.defaultName()
 
   isValidUser: (user) ->
-    return !!Team.brain().userForName(user)
+    return !!Squad.brain().userForName(user)
 
   label: ->
     "`#{@name}`"
 
-module.exports = Team
+module.exports = Squad

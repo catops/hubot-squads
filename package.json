@@ -1,6 +1,6 @@
 {
-  "name": "catops-teams",
-  "description": "Create and manage team members using Hubot.",
+  "name": "hubot-squads",
+  "description": "Create and manage teams (squads) using Hubot.",
   "version": "1.2.4",
   "author": "Chris Contolini <christopher.contolini@cfpb.gov>",
   "license": "MIT",
@@ -14,10 +14,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/catops/catops-teams.git"
+    "url": "git://github.com/catops/hubot-squads.git"
   },
   "bugs": {
-    "url": "https://github.com/catops/catops-teams/issues"
+    "url": "https://github.com/catops/hubot-squads/issues"
   },
   "dependencies": {
     "coffee-script": "1.6"

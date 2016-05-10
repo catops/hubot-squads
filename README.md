@@ -1,44 +1,43 @@
-# CatOps Teams [![Build Status](https://img.shields.io/travis/catops/catops-teams.svg?maxAge=2592000&style=flat-square)](https://travis-ci.org/catops/catops-teams.svg?branch=master) [![npm](https://img.shields.io/npm/v/catops-teams.svg?maxAge=2592000&style=flat-square)](https://www.npmjs.com/package/catops-teams)
+# Hubot Squads [![Build Status](https://img.shields.io/travis/catops/hubot-squads.svg?maxAge=2592000&style=flat-square)](https://travis-ci.org/catops/hubot-squads.svg?branch=master) [![npm](https://img.shields.io/npm/v/hubot-squads.svg?maxAge=2592000&style=flat-square)](https://www.npmjs.com/package/hubot-squads)
 
-:cat: Create and manage team members using Hubot. Based on [hubot-team](https://github.com/hubot-scripts/hubot-team).
+:cat: Create and manage teams (squads) using Hubot. Based on [hubot-team](https://github.com/hubot-scripts/hubot-team).
 
 ## Installation
 
-Add **catops-teams** to your `package.json` file:
+Add **hubot-squads** to your `package.json` file:
 
 ```json
 "dependencies": {
   ...
-  "catops-teams": "latest"
+  "hubot-squads": "latest"
 }
 ```
 
-Add **catops-teams** to your `external-scripts.json`:
+Add **hubot-squads** to your `external-scripts.json`:
 
 ```json
-["catops-teams"]
+["hubot-squads"]
 ```
 
-Run `npm install catops-teams`
+Run `npm install hubot-squads`
 
 
 ## Configuration
 
-Some commands require an 'admin' role to be run (i.e. `clear` team list). The
-admins can be specified through the `HUBOT_TEAM_ADMIN` environment variable,
-as a comma separated list of usernames.
+Some commands require an 'admin' role to be run (i.e. `clear` team list).
+Use [hubot-auth](https://github.com/hubot-scripts/hubot-auth) to specify admins.
 
 
 ## Commands
 
 ```
-hubot create team <team_name> - create team called <team_name>
-hubot (delete|remove) team <team_name> - delete team called <team_name>
-hubot (list|show) teams - list all existing teams
-hubot add (me|<user>) to team <team_name> - add me or <user> to team
-hubot remove (me|<user>) from team <team_name> - remove me or <user> from team
-hubot (list|show) team <team_name> - list the people in the team
-hubot (empty|clear) team <team_name> - clear everyone from team
+hubot create squad <squad_name> - create squad called <squad_name>
+hubot (delete|remove) squad <squad_name> - delete squad called <squad_name>
+hubot (list|show) squads - list all existing squads
+hubot add (me|<user>) to squad <squad_name> - add me or <user> to squad
+hubot remove (me|<user>) from squad <squad_name> - remove me or <user> from squad
+hubot (list|show) squad <squad_name> - list the people in the squad
+hubot (empty|clear) squad <squad_name> - clear everyone from squad
 ```
 
 ----
