@@ -78,7 +78,7 @@ class ResponseMessage
     if keys.length < 1
       response = "No one in #{squad.label()} has added their public key."
     else
-      response = "#{squad.label()} keys (#{keys.length} total):\n\n#{keys.join('\n')}"
+      response = "#{squad.label()} keys (#{keys.length} total):\n\n```\n#{keys.join('\n')}\n```"
     response
 
   squadCleared: (squad)->
