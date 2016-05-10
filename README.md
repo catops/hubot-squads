@@ -37,6 +37,7 @@ hubot (list|show) squads - list all existing squads
 hubot add (me|<user>) to squad <squad_name> - add me or <user> to squad
 hubot remove (me|<user>) from squad <squad_name> - remove me or <user> from squad
 hubot (list|show) squad <squad_name> - list the people in the squad
+hubot (list|show) squad <squad_name> keys - lists the public SSH keys for everyone in the squad, requires `hubot-keys`
 hubot (empty|clear) squad <squad_name> - clear everyone from squad
 ```
 

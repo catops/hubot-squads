@@ -14,7 +14,7 @@
 #   hubot add (me|<user>) to squad <squad_name> - add me or <user> to squad
 #   hubot remove (me|<user>) from squad <squad_name> - remove me or <user> from squad
 #   hubot (list|show) squad <squad_name> - list the people in the squad
-#   hubot (list|show) squad <squad_name> keys - lists the public SSH keys for everyone on the squad, requires `hubot-keys`
+#   hubot (list|show) squad <squad_name> keys - lists the public SSH keys for everyone in the squad, requires `hubot-keys`
 #   hubot (empty|clear) squad <squad_name> - clear everyone from squad
 #
 # Author:
@@ -29,7 +29,7 @@ module.exports = (robot) ->
   Squad.robot = robot
 
   ##
-  ## hubot squads create <squad_name> - create squad called <squad_name>
+  ## hubot create squad <squad_name> - create squad called <squad_name>
   ##
   robot.respond /create( new)? squad (\S*)/i, (msg) ->
     squadName = msg.match[2]
@@ -39,11 +39,11 @@ module.exports = (robot) ->
       message = ResponseMessage.squadAlreadyExists squad
     else
       squad = Squad.create squadName
-      message = ResponseMessage.squadCreated squad
+      message = ResponseMessage.squadCreated squad, robot.name
     msg.send message
 
   ##
-  ## hubot squads remove <squad_name> - delete squad called <squad_name>
+  ## hubot remove squad <squad_name> - delete squad called <squad_name>
   ##
   robot.respond /(delete|remove) squad (\S*)$/i, (msg) ->
     squadName = msg.match[2]
@@ -58,7 +58,7 @@ module.exports = (robot) ->
       msg.reply ResponseMessage.adminRequired()
 
   ##
-  ## hubot squads add (me|<user>) to <squad_name> - add me or <user> to squad
+  ## hubot add (me|<user>) to squad <squad_name> - add me or <user> to squad
   ##
   robot.respond /add (\S*) to squad (\S*)/i, (msg) ->
     squadName = msg.match[2]
@@ -74,7 +74,7 @@ module.exports = (robot) ->
     msg.send message
 
   ##
-  ## hubot squads remove (me|<user>) from <squad_name> - remove me or <user> from squad
+  ## hubot remove (me|<user>) from squad <squad_name> - remove me or <user> from squad
   ##
   robot.respond /remove (\S*) (from|to) squad (\S*)/i, (msg) ->
     squadName = msg.match[3]
@@ -89,14 +89,14 @@ module.exports = (robot) ->
     msg.send message
 
   ##
-  ## hubot squads list - list all existing squads
+  ## hubot list - list all existing squads
   ##
   robot.respond /(list|show)( all)? squads$/i, (msg) ->
     squads = Squad.all()
-    msg.send ResponseMessage.listSquads(squads)
+    msg.send ResponseMessage.listSquads(squads, robot.name)
 
   ##
-  ## hubot squads (list|show) <squad_name> - list the people in the squad
+  ## hubot (list|show) squad <squad_name> - list the people in the squad
   ##
   robot.respond /(list|show) squad (\S*)$/i, (msg) ->
     squadName = msg.match[2]
@@ -105,16 +105,16 @@ module.exports = (robot) ->
     msg.send message
 
   ##
-  ## hubot squads (list|show) <squad_name> - list the people in the squad
+  ## hubot (list|show) squad <squad_name> - list the keys of the people in the squad
   ##
   robot.respond /(list|show|get) squad (\S*) keys$/i, (msg) ->
     squadName = msg.match[2]
     squad = Squad.getOrDefault(squadName)
-    message = if squad then ResponseMessage.listSquadKeys(squad) else ResponseMessage.squadNotFound(squadName)
+    message = if squad then ResponseMessage.listSquadKeys(squad, robot.name) else ResponseMessage.squadNotFound(squadName)
     msg.send message
 
   ##
-  ## hubot squads (empty|clear) <squad_name> - clear squad list
+  ## hubot (empty|clear) squad <squad_name> - clear squad list
   ##
   robot.respond /(empty|clear) squad (\S*)/i, (msg) ->
     if robot.auth.isAdmin msg.envelope.user

@@ -4,12 +4,15 @@ Squad           = require '../../src/models/squad'
 
 describe 'ResponseMessage', ->
   beforeEach ->
-    Squad.robot = {brain: {data: {}}}
+    Squad.robot =
+      name: 'hubot'
+      brain:
+        data: {}
 
   describe '#squadCreated', ->
     it 'returns the message', ->
       squad = new Squad('squad1')
-      expect(responseMessage.squadCreated(squad)).to.eql('I created squad `squad1`, add some people to it with `add [username] to squad [squad]`.')
+      expect(responseMessage.squadCreated(squad, Squad.robot.name)).to.eql('I created squad `squad1`, add some people to it with `hubot add [username] to squad [squad]`.')
 
   describe '#squadAlreadyExists', ->
     it 'returns the message', ->

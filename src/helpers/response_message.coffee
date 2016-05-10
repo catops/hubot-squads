@@ -1,7 +1,7 @@
 class ResponseMessage
 
-  squadCreated: (squad)->
-    "I created squad #{squad.label()}, add some people to it with `add [username] to squad [squad]`."
+  squadCreated: (squad, bot)->
+    "I created squad #{squad.label()}, add some people to it with `#{bot} add [username] to squad [squad]`."
 
   squadAlreadyExists: (squad)->
     "Squad #{squad.label()} already exists."
@@ -12,8 +12,8 @@ class ResponseMessage
   squadDeleted: (squad)->
     "Squad #{squad.label()} removed."
 
-  listSquads: (squads)->
-    return 'No squads have been created. Create one with `create squad [squad]`.' if squads.length is 0
+  listSquads: (squads, bot)->
+    return "No squads have been created. Create one with `#{bot} create squad [squad]`." if squads.length is 0
     message = "Squads:"
 
     for squad in squads
@@ -64,7 +64,21 @@ class ResponseMessage
       for member in squad.members
         position += 1
         response += "#{position}. #{member}\n"
+    response
 
+  listSquadKeys: (squad, robot)->
+    return "To manage members' public keys, please install the `hubot-keys` plugin." if not robot.keys
+    count = squad.membersCount()
+    keys = []
+    if count is 0
+      response = "There is no one in #{squad.label()}."
+    for member in squad.members
+      key = robot.keys.keyForUserName member
+      keys.push key if key
+    if keys.length < 1
+      response = "No one in #{squad.label()} has added their public key."
+    else
+      response = "#{squad.label()} keys (#{keys.length} total):\n\n#{keys.join('\n')}"
     response
 
   squadCleared: (squad)->

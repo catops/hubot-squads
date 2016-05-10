@@ -55,7 +55,7 @@ describe 'hubot-squad', ->
   describe 'create a squad', ->
     it 'shows a message when squad is created successfully', (done)->
       messageHelper.sendMessage(done, 'hubot create squad soccer', (result)->
-        expect(result[0]).to.equal('I created squad `soccer`, add some people to it with `add [username] to squad [squad]`.')
+        expect(result[0]).to.equal('I created squad `soccer`, add some people to it with `hubot add [username] to squad [squad]`.')
       )
 
     describe 'failure', ->
@@ -94,7 +94,7 @@ describe 'hubot-squad', ->
 
     it 'shows no squad created message', (done)->
       messageHelper.sendMessage(done, 'hubot list all squads', (result)->
-        expect(result[0]).to.equal('No squads have been created. Create one with `create squad [squad]`.'))
+        expect(result[0]).to.equal('No squads have been created. Create one with `hubot create squad [squad]`.'))
 
   describe 'squadName? squad add (me|user)', ->
 
@@ -135,6 +135,12 @@ describe 'hubot-squad', ->
       Squad.create('soccer', ['mocha', 'peter'])
       messageHelper.sendMessage(done, 'hubot list squad soccer', (result)->
         expect(result[0]).to.equal('`soccer` (2 total):\n1. mocha\n2. peter\n'))
+
+  describe 'squadName? squad list|show keys', ->
+    it 'shows a message telling the user to install `hubot-keys`', (done)->
+      Squad.create('soccer', ['mocha', 'peter'])
+      messageHelper.sendMessage(done, 'hubot list squad soccer keys', (result)->
+        expect(result[0]).to.equal("To manage members' public keys, please install the `hubot-keys` plugin."))
 
   describe 'squadName? squad clear|empty', ->
     it 'shows a message when members have been removed', (done)->
