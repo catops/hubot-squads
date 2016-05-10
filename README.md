@@ -1,6 +1,8 @@
 # Hubot Squads [![Build Status](https://img.shields.io/travis/catops/hubot-squads.svg?maxAge=2592000&style=flat-square)](https://travis-ci.org/catops/hubot-squads.svg?branch=master) [![npm](https://img.shields.io/npm/v/hubot-squads.svg?maxAge=2592000&style=flat-square)](https://www.npmjs.com/package/hubot-squads)
 
-:cat: Create and manage teams (squads) using Hubot. Based on [hubot-team](https://github.com/hubot-scripts/hubot-team).
+:cat2: Create and manage teams (squads) using Hubot. Based on [hubot-team](https://github.com/hubot-scripts/hubot-team).
+
+![hubot-eavesdrop screenshot](screenshot.png)
 
 ## Installation
 
