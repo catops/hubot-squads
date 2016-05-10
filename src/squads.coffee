@@ -110,7 +110,7 @@ module.exports = (robot) ->
   robot.respond /(list|show|get) squad (\S*) keys$/i, (msg) ->
     squadName = msg.match[2]
     squad = Squad.getOrDefault(squadName)
-    message = if squad then ResponseMessage.listSquadKeys(squad, robot.name) else ResponseMessage.squadNotFound(squadName)
+    message = if squad then ResponseMessage.listSquadKeys(squad, robot) else ResponseMessage.squadNotFound(squadName)
     msg.send message
 
   ##

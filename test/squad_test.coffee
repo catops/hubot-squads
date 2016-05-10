@@ -90,7 +90,7 @@ describe 'hubot-squad', ->
     it 'shows the squads with members', (done)->
       Squad.create('soccer', ['peter'])
       messageHelper.sendMessage(done, 'hubot list all squads', (result)->
-        expect(result[0]).to.equal('Squads:\n`soccer` (1 total)\n- peter\n'))
+        expect(result[0]).to.equal('Squads:\n`soccer` (1 total)\n- `peter`\n'))
 
     it 'shows no squad created message', (done)->
       messageHelper.sendMessage(done, 'hubot list all squads', (result)->
@@ -106,35 +106,35 @@ describe 'hubot-squad', ->
       robot.brain.data.users = [{ id: '1234', name: 'peter' }]
       Squad.create('soccer', ['peter'])
       messageHelper.sendMessage(done, 'hubot add peter to squad soccer', (result)->
-        expect(result[0]).to.equal('peter is already in squad `soccer`.'))
+        expect(result[0]).to.equal('`peter` is already in squad `soccer`.'))
 
     it 'shows a message when user is new in squad', (done)->
       robot.brain.data.users = [{ id: '1234', name: 'peter' }]
       Squad.create('soccer')
       messageHelper.sendMessage(done, 'hubot add peter to squad soccer', (result)->
-        expect(result[0]).to.equal('I added peter to squad `soccer`.'))
+        expect(result[0]).to.equal('I added `peter` to squad `soccer`.'))
 
     it 'shows a message when user does not exist', (done)->
       Squad.create('soccer')
       messageHelper.sendMessage(done, 'hubot add peter to squad soccer', (result)->
-        expect(result[0]).to.equal('peter is not a valid user. Are you sure they have a chat account?'))
+        expect(result[0]).to.equal('`peter` is not a valid user. Are you sure they have a chat account?'))
 
   describe 'squadName? squad remove member', ->
     it 'shows a message when user does not exist in squad', (done)->
       Squad.create('soccer')
       messageHelper.sendMessage(done, 'hubot remove peter from squad soccer', (result)->
-        expect(result[0]).to.equal('peter is not in squad `soccer`.'))
+        expect(result[0]).to.equal('`peter` is not in squad `soccer`.'))
 
     it 'shows a message when user exists in squad', (done)->
       Squad.create('soccer', ['peter', '@james'])
       messageHelper.sendMessage(done, 'hubot remove peter from squad soccer', (result)->
-        expect(result[0]).to.equal('I removed peter from `soccer`. 1 member remains.'))
+        expect(result[0]).to.equal('I removed `peter` from `soccer`. 1 member remains.'))
 
   describe 'squadName? squad list|show', ->
     it 'shows a message listing the members in a squad', (done)->
       Squad.create('soccer', ['mocha', 'peter'])
       messageHelper.sendMessage(done, 'hubot list squad soccer', (result)->
-        expect(result[0]).to.equal('`soccer` (2 total):\n1. mocha\n2. peter\n'))
+        expect(result[0]).to.equal('`soccer` (2 total):\n1. `mocha`\n2. `peter`\n'))
 
   describe 'squadName? squad list|show keys', ->
     it 'shows a message telling the user to install `hubot-keys`', (done)->
