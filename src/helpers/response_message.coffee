@@ -74,6 +74,8 @@ class ResponseMessage
       response = "There is no one in #{squad.label()}."
     for member in squad.members
       key = robot.keys.keyForUserName member
+      email = '# ' + robot.brain.userForName(member).email_address
+      keys.push email if key
       keys.push key if key
     if keys.length < 1
       response = "No one in #{squad.label()} has added their public key."
