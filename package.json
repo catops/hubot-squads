@@ -1,7 +1,7 @@
 {
   "name": "hubot-squads",
   "description": "Create and manage teams (squads) using Hubot.",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": "Chris Contolini <christopher.contolini@cfpb.gov>",
   "license": "MIT",
   "keywords": [
