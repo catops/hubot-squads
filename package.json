@@ -20,7 +20,7 @@
     "url": "https://github.com/catops/hubot-squads/issues"
   },
   "dependencies": {
-    "coffee-script": "1.6"
+    "coffee-script": "1.12.0"
   },
   "main": "index.coffee",
   "scripts": {
