@@ -27,7 +27,7 @@
     "test": "script/test"
   },
   "devDependencies": {
-    "mocha": "*",
+    "mocha": "3.4.0",
     "chai": "*",
     "sinon-chai": "*",
     "sinon": "*",
